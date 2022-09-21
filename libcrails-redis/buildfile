@@ -1,0 +1,37 @@
+import intf_libs += libredis-plus-plus%lib{redis-plus-plus}
+import intf_libs += libcrails%lib{crails}
+import intf_libs += libcrails-databases%lib{crails-databases}
+
+lib{crails-redis}: {hxx ixx txx cxx}{**} $impl_libs $intf_libs
+
+hxx{export}@./: cxx.importable = false
+
+# Build options.
+#
+cxx.poptions =+ "-I$out_root" "-I$src_root"
+
+{hbmia obja}{*}: cxx.poptions += -DLIBCRAILS_REDIS_STATIC_BUILD
+{hbmis objs}{*}: cxx.poptions += -DLIBCRAILS_REDIS_SHARED_BUILD
+
+lib{crails-redis}:
+{
+  cxx.export.poptions = "-I$out_root/libcrails-redis/" "-I$src_root/libcrails-redis/"
+  cxx.export.libs = $intf_libs
+}
+
+liba{crails-redis}: cxx.export.poptions += -DLIBCRAILS_REDIS_STATIC
+libs{crails-redis}: cxx.export.poptions += -DLIBCRAILS_REDIS_SHARED
+
+if $version.pre_release
+  lib{crails-redis}: bin.lib.version = "-$version.project_id"
+else
+  lib{crails-redis}: bin.lib.version = "-$version.major.$version.minor"
+
+# Install into the libcrails-redis/ subdirectory of, say, /usr/include/
+# recreating subdirectories.
+#
+{hxx ixx txx}{*}:
+{
+  install         = include/
+  install.subdirs = true
+}

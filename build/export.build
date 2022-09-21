@@ -1,0 +1,6 @@
+$out_root/
+{
+  include libcrails-redis/
+}
+
+export $out_root/libcrails-redis/$import.target
