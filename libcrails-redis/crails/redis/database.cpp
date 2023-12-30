@@ -6,7 +6,7 @@ using namespace Crails::Redis;
 
 Database::Database(const Databases::DatabaseSettings& settings) : Databases::Database("redis")
 {
-  options.host = defaults_to<const char*>(settings, "hostname", "0.0.0.0");
+  options.host = defaults_to<std::string>(settings, "hostname", "0.0.0.0");
   options.port = defaults_to<unsigned short>(settings, "port", 6379);
 }
 
