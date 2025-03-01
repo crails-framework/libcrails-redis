@@ -1,4 +1,4 @@
-import intf_libs += libredis-plus-plus%lib{redis-plus-plus}
+import intf_libs += redis-plus-plus%lib{redis-plus-plus}
 import intf_libs += libcrails%lib{crails}
 import intf_libs += libcrails-databases%lib{crails-databases}
 
