@@ -1,13 +1,13 @@
 #include "database.hpp"
-#include <crails/any_cast.hpp>
+#include <crails/shared_vars.hpp>
 
 using namespace Crails;
 using namespace Crails::Redis;
 
 Database::Database(const Databases::DatabaseSettings& settings) : Databases::Database("redis")
 {
-  options.host = defaults_to<std::string>(settings, "hostname", "0.0.0.0");
-  options.port = defaults_to<unsigned short>(settings, "port", 6379);
+  options.host = cast<std::string>(settings, "hostname", "0.0.0.0");
+  options.port = cast<unsigned short>(settings, "port", 6379);
 }
 
 Database::~Database()
